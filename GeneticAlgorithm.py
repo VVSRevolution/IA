@@ -7,6 +7,7 @@ tamanhoGen = 44
 numGeracoes = 40
 taxaMultacao = 0.8#%
 
+# fitness aptdao -> roleta -> cruzamento -> multacao -> deixar melhor pai
 Genoma = List[int]
 class structPopulacao:
     def __init__(self,genoma,aptidao):
@@ -17,10 +18,7 @@ Populacao = List[structPopulacao]
 Aptidao = List[int]
 
 def main():
-
-    
     Populacao = gerarPopulacao(tamanhoPop,tamanhoGen)
-
     for i in range(tamanhoPop):
         print(f"{i}: {binToDec(Populacao[i].genoma[:22])} = {binToDec(Populacao[i].genoma[22:44])} f6: {f6(binToDec(Populacao[i].genoma[:22]),binToDec(Populacao[i].genoma[22:44]))}\n")
     
@@ -41,7 +39,6 @@ def f6(x,y):
     y = (y * 200/(2**22-1)) - 100
     print(f"x={x} y={y}")
     return 0.5 - ((sin(sqrt(x**2+y**2)))**2 - 0.5)/(1 + 0.001*(x**2 + y**2))**2
-
 
 def cruzamento(genoma1:Genoma, genoma2:Genoma):
     x = randint(1,43)

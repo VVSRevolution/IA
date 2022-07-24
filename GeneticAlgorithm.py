@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 from random import *
 from math import *
 from typing import *
@@ -10,40 +9,37 @@ taxaMultacao = 0.8#%
 
 Genoma = List[int]
 class structPopulacao:
-    def __init__(self):
-        self.genoma: Genoma
-        self.aptidao: int
+    def __init__(self,genoma,aptidao):
+        self.genoma: Genoma = genoma
+        self.aptidao: int = aptidao
 
 Populacao = List[structPopulacao]
 Aptidao = List[int]
 
 def main():
 
-    Populacao.genoma = gerarPopulacao(tamanhoPop,tamanhoGen)
-    #for i in range(tamanhoPop):
-        #print(f"{i}: {binToDec(Populacao.genoma[i][:22])} = {binToDec(Populacao.genoma[i][22:44])} f6{f6(binToDec(Populacao.genoma[i][:22]),binToDec(Populacao.genoma[i][22:44]))}")
+    
+    Populacao = gerarPopulacao(tamanhoPop,tamanhoGen)
+
+    for i in range(tamanhoPop):
+        print(f"{i}: {binToDec(Populacao[i].genoma[:22])} = {binToDec(Populacao[i].genoma[22:44])} f6: {f6(binToDec(Populacao[i].genoma[:22]),binToDec(Populacao[i].genoma[22:44]))}\n")
     
 def gerarGenoma(largura: int) -> Genoma:
     return choices([0, 1],k=largura)
 
-def gerarPopulacao(tamanhoPop: int, larguraGenoma: int) -> Populacao:
-    
-    populacaoList: Populacao = List[structPopulacao]
+def gerarPopulacao(tamanhoPop: int, larguraGenoma: int):
+    populacaoList = []
     for _ in range(tamanhoPop):
-        genomaTemp:Genoma
-        genomaTemp = gerarGenoma(larguraGenoma)
-        populacaoList.append(populacaoList(genomaTemp,0))
+        populacaoList.append(structPopulacao(gerarGenoma(larguraGenoma),0))
     return populacaoList
     
-    
-
 def fitness(populacao:Populacao) -> Aptidao:
     pass
 
 def f6(x,y):
     x = (x * 200/(2**22-1)) - 100                   
     y = (y * 200/(2**22-1)) - 100
-    print(f"x={x} y={y}\n")
+    print(f"x={x} y={y}")
     return 0.5 - ((sin(sqrt(x**2+y**2)))**2 - 0.5)/(1 + 0.001*(x**2 + y**2))**2
 
 

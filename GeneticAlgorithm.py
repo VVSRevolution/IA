@@ -4,9 +4,9 @@ from random import *
 from math import *
 from typing import *
 
-tamanhoPop = 100
+tamanhoPop = 1000
 tamanhoGen = 44
-numGeracoes = 40
+numGeracoes = 400000
 taxaMultacao = 0.8#%
 
 
@@ -42,8 +42,9 @@ def main():
         populacaoFilho[indexMin] = Populacao[indexMax]
         report =f"Melhor Genoma na [{indexMax}] geração ({j}): \t {getxyf6(Populacao[indexMax].genoma)}\nbinario: {Populacao[indexMax].genoma}"
         print(report)
-        Populacao = 0
-        Populacao = populacaoFilho
+        Populacao.clear()
+        Populacao.extend(populacaoFilho)
+        populacaoFilho.clear()
        
 
 
@@ -78,8 +79,6 @@ def cruzamento(genoma1:Genoma, genoma2:Genoma) -> Genoma:
     x = randint(1,43)
     temp1 = genoma1[:x] + genoma2[x:44]
     temp2 = genoma2[:x] + genoma1[x:44]
-    genoma1 = temp1
-    genoma2 = temp2
 
     return temp1, temp2
 
@@ -116,7 +115,12 @@ def roleta(populacao:Populacao):
 def getxyf6(genoma: Genoma):
     x = binToDec(genoma[:22])
     y = binToDec(genoma[22:44])
+    
     f6r = f6(x,y)
+    
+    x = (x * 200/(2**22-1)) - 100                   
+    y = (y * 200/(2**22-1)) - 100
+    
     result = f"x = {x}\ty = {y}\tF6 = {f6r}"
     return result
     
